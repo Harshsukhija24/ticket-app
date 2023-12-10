@@ -25,9 +25,8 @@ const Dashboard = () => {
     };
 
     getTickets();
-  }, []); // Empty dependency array ensures that the effect runs only once on mount
-
-  // Make sure we have tickets needed for production build.
+  }, []); 
+  
   if (!tickets.length) {
     return <p>No tickets.</p>;
   }
