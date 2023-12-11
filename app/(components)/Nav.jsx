@@ -7,19 +7,14 @@ const Nav = () => {
   return (
     <nav className="flex justify-between bg-nav p-4">
       <div className="flex items-center space-x-4">
-        <Link href="/">
+        <Link href="/Home">
           <FontAwesomeIcon icon={faHome} className="icon" />
         </Link>
         <Link href="/TicketPage/new">
           <FontAwesomeIcon icon={faTicket} className="icon" />
-        </Link> 
-         
-
-        <Link href="/Register" >Login</Link>
-
+        </Link>
       </div>
-      <div>
-      </div>
+    
     </nav>
   );
 };

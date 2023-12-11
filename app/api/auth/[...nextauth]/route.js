@@ -1,5 +1,5 @@
 import { connectDb } from "@/app/lib/mongodb";
-import User from "@/app/models/User"; // 
+import User from "../../../(models)/User"; 
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
@@ -38,7 +38,7 @@ export const authOptions = {
   session: { strategy: "jwt" },
   secret: process.env.NEXT_AUTH_SECRET,
   pages: {
-    signIn: "/",
+    signIn: "/Home",
   },
 };
 

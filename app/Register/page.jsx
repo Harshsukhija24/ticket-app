@@ -60,7 +60,7 @@ const Register = () => {
 
       const form = e.target;
       form.reset();
-      router.push("/Login");
+      router.push("/");
     } catch (error) {
       console.error("Registration failed:", error.message);
       setError(error.message);
@@ -104,7 +104,7 @@ const Register = () => {
         {error && <div className="text-red-500">{error}</div>}
         <p className="text-center">
           Already have an account?{" "}
-          <Link href="/Login" className="text-blue-500">
+          <Link href="/" className="text-blue-500">
             Login
           </Link>
         </p>
