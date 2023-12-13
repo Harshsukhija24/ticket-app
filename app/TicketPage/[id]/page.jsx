@@ -1,16 +1,15 @@
-"use client";
+ "use client"
 
 import { useSession } from "next-auth/react";
-import EditTicketForm from "../../(components)/Editticket"
-import { useRouter } from "next/navigation"; // Fix: use "next/router" instead of "next/navigation"
+import EditTicketForm from "../../(components)/Editticket";
+import { useRouter } from "next/navigation"; // Corrected import statement
 
-const getTicketById = async (id) => {
-  const { data: session } = useSession();
+const getTicketById = async (id, session) => {
   const router = useRouter();
 
   if (!session) {
     router.push("/Login");
-    return null; // Fix: Return null to indicate that there is no session
+    return null;
   }
 
   try {
@@ -19,7 +18,7 @@ const getTicketById = async (id) => {
     });
 
     if (!res.ok) {
-      throw new Error("Failed to fetch topic");
+      throw new Error("Failed to fetch ticket");
     }
 
     return res.json();
@@ -31,18 +30,15 @@ const getTicketById = async (id) => {
 const TicketPage = ({ params }) => {
   const router = useRouter();
   const { data: session } = useSession();
-  const EDITMODE = params.id !== "new"; // Fix: Change the condition for EDITMODE
-
-  // Use the getTicketById function to fetch ticket data
-  const updateTicketData = EDITMODE ? getTicketById(params.id) : { _id: "new" };
+  const EDITMODE = params.id !== "new";
 
   if (!session) {
-    // If there's no session, redirect to the login page
     router.push("/Login");
-    return null; // Fix: Return null to prevent rendering the component
+    return null;
   }
 
-  // Render the EditTicketForm component with the fetched ticket data
+  const updateTicketData = EDITMODE ? getTicketById(params.id, session) : { _id: "new" };
+
   return <EditTicketForm ticket={updateTicketData} />;
 };
 

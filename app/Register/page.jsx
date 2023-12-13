@@ -1,5 +1,5 @@
 // Register.js
-"use client"
+"use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -21,13 +21,16 @@ const Register = () => {
         throw new Error("All fields are necessary.");
       }
 
-      const resUserExists = await fetch("http://localhost:3000/api/userExists", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
+      const resUserExists = await fetch(
+        "http://localhost:3000/api/userExits",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        }
+      );
 
       if (!resUserExists.ok) {
         throw new Error("Error checking user existence");
