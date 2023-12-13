@@ -1,7 +1,5 @@
 // Register.js
-
-"use client";
-
+"use client"
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -23,7 +21,7 @@ const Register = () => {
         throw new Error("All fields are necessary.");
       }
 
-      const resUserExists = await fetch("http://localhost:3000/api/userExits", {
+      const resUserExists = await fetch("http://localhost:3000/api/userExists", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -60,7 +58,7 @@ const Register = () => {
 
       const form = e.target;
       form.reset();
-      router.push("/");
+      router.push("/Login");
     } catch (error) {
       console.error("Registration failed:", error.message);
       setError(error.message);
@@ -68,47 +66,49 @@ const Register = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto">
-      <h1 className="text-2xl font-semibold mb-4">Register</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          placeholder="Name"
-          onChange={(e) => setName(e.target.value)}
-          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-        />
-        <input
-          type="text"
-          placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-        />
-        <input
-          type="text"
-          placeholder="Company Name"
-          onChange={(e) => setCompany(e.target.value)}
-          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-        />
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-        >
-          Register
-        </button>
-        {error && <div className="text-red-500">{error}</div>}
-        <p className="text-center">
-          Already have an account?{" "}
-          <Link href="/" className="text-blue-500">
-            Login
-          </Link>
-        </p>
-      </form>
+    <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
+      <div className="max-w-md mx-auto bg-gray-800 p-8 rounded-md">
+        <h1 className="text-2xl font-semibold mb-4">Register</h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="text"
+            placeholder="Name"
+            onChange={(e) => setName(e.target.value)}
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+          />
+          <input
+            type="text"
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+          />
+          <input
+            type="text"
+            placeholder="Company Name"
+            onChange={(e) => setCompany(e.target.value)}
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+          />
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+          >
+            Register
+          </button>
+          {error && <div className="text-red-500">{error}</div>}
+          <p className="text-center">
+            Already have an account?{" "}
+            <Link href="/" className="text-blue-500">
+              Login
+            </Link>
+          </p>
+        </form>
+      </div>
     </div>
   );
 };

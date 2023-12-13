@@ -1,12 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 import TicketCard from "../(components)/TicketCard";
+import { useRouter } from "next/navigation";
 
 const Dashboard = () => {
   const [tickets, setTickets] = useState([]);
+  const{data:session}=useSession();
+  const router =useRouter();
 
   useEffect(() => {
+    if(!session){
+      router.push("/Login")
+    }
     const getTickets = async () => {
       try {
         const res = await fetch("http://localhost:3000/api/Tickets", {
@@ -25,13 +32,15 @@ const Dashboard = () => {
     };
 
     getTickets();
-  }, []); 
-  
+  }, []);
+
   if (!tickets.length) {
     return <p>No tickets.</p>;
   }
 
-  const uniqueCategories = [...new Set(tickets.map(({ category }) => category))];
+  const uniqueCategories = [
+    ...new Set(tickets.map(({ category }) => category)),
+  ];
 
   return (
     <div className="p-5">
@@ -43,7 +52,11 @@ const Dashboard = () => {
               {tickets
                 .filter((ticket) => ticket.category === uniqueCategory)
                 .map((filteredTicket, _index) => (
-                  <TicketCard id={_index} key={_index} ticket={filteredTicket} />
+                  <TicketCard
+                    id={_index}
+                    key={_index}
+                    ticket={filteredTicket}
+                  />
                 ))}
             </div>
           </div>

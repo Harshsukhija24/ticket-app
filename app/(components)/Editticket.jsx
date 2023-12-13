@@ -62,22 +62,22 @@ const EditTicketForm = ({ ticket }) => {
     }
 
     router.refresh();
-    router.push("/");
+    router.push("/Home");
   };
 
   const categories = [
     "Hardware Problem",
     "Software Problem",
-    "Application Deveopment",
+    "Application Development",
     "Project",
   ];
 
   return (
-    <div className=" flex justify-center">
+    <div className="flex justify-center bg-gray-900 text-white">
       <form
         onSubmit={handleSubmit}
         method="post"
-        className="flex flex-col gap-3 w-1/2"
+        className="flex flex-col gap-3 w-1/2 p-4"
       >
         <h3>{EDITMODE ? "Update Your Ticket" : "Create New Ticket"}</h3>
         <label>Title</label>
@@ -88,6 +88,7 @@ const EditTicketForm = ({ ticket }) => {
           onChange={handleChange}
           required={true}
           value={formData.title}
+          className="input"
         />
         <label>Description</label>
         <textarea
@@ -97,12 +98,14 @@ const EditTicketForm = ({ ticket }) => {
           required={true}
           value={formData.description}
           rows="5"
+          className="input"
         />
         <label>Category</label>
         <select
           name="category"
           value={formData.category}
           onChange={handleChange}
+          className="input"
         >
           {categories?.map((category, _index) => (
             <option key={_index} value={category}>
@@ -112,53 +115,23 @@ const EditTicketForm = ({ ticket }) => {
         </select>
 
         <label>Priority</label>
-        <div>
-          <input
-            id="priority-1"
-            name="priority"
-            type="radio"
-            onChange={handleChange}
-            value={1}
-            checked={formData.priority == 1}
-          />
-          <label>1</label>
-          <input
-            id="priority-2"
-            name="priority"
-            type="radio"
-            onChange={handleChange}
-            value={2}
-            checked={formData.priority == 2}
-          />
-          <label>2</label>
-          <input
-            id="priority-3"
-            name="priority"
-            type="radio"
-            onChange={handleChange}
-            value={3}
-            checked={formData.priority == 3}
-          />
-          <label>3</label>
-          <input
-            id="priority-4"
-            name="priority"
-            type="radio"
-            onChange={handleChange}
-            value={4}
-            checked={formData.priority == 4}
-          />
-          <label>4</label>
-          <input
-            id="priority-5"
-            name="priority"
-            type="radio"
-            onChange={handleChange}
-            value={5}
-            checked={formData.priority == 5}
-          />
-          <label>5</label>
+        <div className="flex">
+          {[1, 2, 3, 4, 5].map((priority) => (
+            <div key={priority} className="mr-2">
+              <input
+                id={`priority-${priority}`}
+                name="priority"
+                type="radio"
+                onChange={handleChange}
+                value={priority}
+                checked={formData.priority === priority}
+                className="mr-1"
+              />
+              <label>{priority}</label>
+            </div>
+          ))}
         </div>
+
         <label>Progress</label>
         <input
           type="range"
@@ -168,9 +141,15 @@ const EditTicketForm = ({ ticket }) => {
           min="0"
           max="100"
           onChange={handleChange}
+          className="input"
         />
         <label>Status</label>
-        <select name="status" value={formData.status} onChange={handleChange}>
+        <select
+          name="status"
+          value={formData.status}
+          onChange={handleChange}
+          className="input"
+        >
           <option value="not started">Not Started</option>
           <option value="started">Started</option>
           <option value="done">Done</option>
