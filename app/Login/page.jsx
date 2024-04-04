@@ -76,7 +76,7 @@ const Login = () => {
           </button>
           {error && <div className="text-red-500">{error}</div>}
           <p className="text-center">
-            Don't have an account?{" "}
+            Dont have an account?{" "}
             <Link href="/Register" className="text-blue-500">
               Register
             </Link>

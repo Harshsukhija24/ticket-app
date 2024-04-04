@@ -14,7 +14,7 @@ const Register = () => {
   const router = useRouter();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); 
 
     try {
       if (!name || !email || !company || !password) {

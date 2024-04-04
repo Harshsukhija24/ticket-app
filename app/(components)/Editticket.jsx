@@ -29,8 +29,8 @@ const EditTicketForm = ({ ticket }) => {
     const value = e.target.value;
     const name = e.target.name;
 
-    setFormData((preState) => ({
-      ...preState,
+    setFormData((prevState) => ({
+      ...prevState,
       [name]: value,
     }));
   };
@@ -38,31 +38,36 @@ const EditTicketForm = ({ ticket }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (EDITMODE) {
-      const res = await fetch(`/api/Tickets/${ticket._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({ formData }),
-      });
-      if (!res.ok) {
-        throw new Error("Failed to update ticket");
+    try {
+      if (EDITMODE) {
+        const res = await fetch(`/api/Tickets/${ticket._id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+        if (!res.ok) {
+          throw new Error("Failed to update ticket");
+        }
+      } else {
+        const res = await fetch("/api/Tickets", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+        if (!res.ok) {
+          throw new Error("Failed to create ticket");
+        }
       }
-    } else {
-      const res = await fetch("/api/Tickets", {
-        method: "POST",
-        body: JSON.stringify({ formData }),
-        //@ts-ignore
-        "Content-Type": "application/json",
-      });
-      if (!res.ok) {
-        throw new Error("Failed to create ticket");
-      }
-    }
 
-    router.refresh();
-    router.push("/Home");
+      router.refresh();
+      router.push("/Home");
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
   const categories = [
@@ -107,8 +112,8 @@ const EditTicketForm = ({ ticket }) => {
           onChange={handleChange}
           className="input"
         >
-          {categories?.map((category, _index) => (
-            <option key={_index} value={category}>
+          {categories.map((category, index) => (
+            <option key={index} value={category}>
               {category}
             </option>
           ))}

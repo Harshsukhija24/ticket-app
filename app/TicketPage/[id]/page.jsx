@@ -1,10 +1,10 @@
- "use client"
+"use client";
 
 import { useSession } from "next-auth/react";
 import EditTicketForm from "../../(components)/Editticket";
 import { useRouter } from "next/navigation"; // Corrected import statement
 
-const getTicketById = async (id, session) => {
+const GettTicketById = async (id, session) => {
   const router = useRouter();
 
   if (!session) {
@@ -37,7 +37,9 @@ const TicketPage = ({ params }) => {
     return null;
   }
 
-  const updateTicketData = EDITMODE ? getTicketById(params.id, session) : { _id: "new" };
+  const updateTicketData = EDITMODE
+    ? getTicketById(params.id, session)
+    : { _id: "new" };
 
   return <EditTicketForm ticket={updateTicketData} />;
 };
